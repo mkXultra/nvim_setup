@@ -1,0 +1,33 @@
+
+let mapleader = " "
+
+
+" ========== キーマッピング ==========
+" インサートモードでjjをESCに 
+inoremap jj <ESC> 
+" ターミナルモードでjjをターミナルノーマルモードへ
+tnoremap jj <C-\><C-n>
+
+" ========== ターミナル分割のキーマッピング ==========
+nnoremap <Leader>th :belowright split<CR>:terminal<CR>
+nnoremap <Leader>tt :belowright split<CR>:terminal<CR>
+nnoremap <Leader>tv :belowright vsplit<CR>:terminal<CR>
+
+" ターミナルを開いたら自動的にインサートモード（入力可能状態）に
+autocmd TermOpen * startinsert
+
+
+
+" WSL環境かどうかを確認してから設定
+if system('uname -r') =~ "microsoft"
+	augroup Yank
+		autocmd!
+		autocmd TextYankPost * :call system('iconv -f UTF-8 -t CP932 | clip.exe', @")
+	augroup END
+endif
+
+
+
+
+
+
