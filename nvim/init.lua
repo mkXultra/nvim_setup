@@ -108,7 +108,6 @@ require("lazy").setup({
 			require("mason").setup()
 			require("mason-lspconfig").setup({
 				ensure_installed = {
-					"volar", -- Vue Language Server
 					"ts_ls", -- TypeScript Language Server
 					"eslint", -- ESLint
 					"tailwindcss", -- TailwindCSSがある場合
@@ -185,33 +184,6 @@ require("lazy").setup({
 				vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
 			end
 
-			-- Volar (Vue)の設定
-			lspconfig.volar.setup({
-				capabilities = capabilities,
-				on_attach = on_attach,
-				filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" },
-				init_options = {
-					typescript = {
-						-- ts_lsのパスを指定（必要に応じて）
-						-- tsdk = vim.fn.getcwd() .. "/node_modules/typescript/lib"
-					},
-					languageFeatures = {
-						implementation = true,
-						references = true,
-						definition = true,
-						typeDefinition = true,
-						callHierarchy = true,
-						hover = true,
-						rename = true,
-						signatureHelp = true,
-						codeAction = true,
-						completion = {
-							defaultTagNameCase = "both",
-							defaultAttrNameCase = "kebabCase",
-						},
-					},
-				},
-			})
 
 			-- TypeScript Serverの設定
 			lspconfig.ts_ls.setup({
