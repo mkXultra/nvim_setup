@@ -77,6 +77,11 @@ require("lazy").setup({
 				{ "<leader>xw", desc = "Workspace diagnostics" },
 				{ "<leader>xd", desc = "Document diagnostics" },
 				{ "<leader>q", desc = "Diagnostic list" },
+
+				-- Git Blame関連のキーマップ
+				{ "<leader>g", group = "Git" },
+				{ "<leader>gb", desc = "Toggle git blame" },
+				{ "<leader>gB", desc = "Show git blame popup" },
 			})
 		end,
 	},
@@ -261,6 +266,19 @@ require("lazy").setup({
 			end, { desc = "Toggle lsp_lines" })
 		end,
 	},
+
+	-- セッション管理
+	{
+		"rmagatti/auto-session",
+		config = function()
+			require("auto-session").setup({
+				auto_session_enabled = true,
+				auto_save_enabled = true,
+				auto_restore_enabled = true,
+				auto_session_suppress_dirs = { "~/", "~/Downloads", "/" },
+			})
+		end,
+	},
 	-- fzf.vim
 	{
 		"junegunn/fzf",
@@ -343,7 +361,23 @@ require("lazy").setup({
 					changedelete = { text = "~" },
 					untracked = { text = "┆" },
 				},
+				-- Git Blame機能を追加
+				current_line_blame = true, -- 現在行のblameを自動表示
+				current_line_blame_opts = {
+					virt_text = true,
+					virt_text_pos = 'eol', -- 行末に表示
+					delay = 500, -- 表示までの遅延（ミリ秒）
+					ignore_whitespace = false,
+				},
+				current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <summary>',
 			})
+
+			-- Blameのトグル用キーマップ
+			vim.keymap.set('n', '<leader>gb', ':Gitsigns toggle_current_line_blame<CR>',
+			               { desc = "Toggle git blame" })
+			-- Blame行の詳細をポップアップで表示
+			vim.keymap.set('n', '<leader>gB', ':Gitsigns blame_line<CR>',
+			               { desc = "Show git blame popup" })
 		end,
 	},
 })
