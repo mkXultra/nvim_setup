@@ -2,6 +2,11 @@ vim.opt.number = true
 -- リーダーキーの設定
 vim.g.mapleader = " "
 
+-- macOSでは通常のyankをシステムクリップボードへ送る
+if vim.fn.has("macunix") == 1 then
+	vim.opt.clipboard = "unnamedplus"
+end
+
 -- ターミナルを開いたら自動的にインサートモード（入力可能状態）に
 vim.api.nvim_create_autocmd("TermOpen", {
 	pattern = "*",
@@ -36,6 +41,7 @@ vim.opt.rtp:prepend(lazypath)
 
 -- プラグインの設定
 require("lazy").setup({
+	{ import = "plugins.markdown" },
 	{
 		"sindrets/diffview.nvim",
 		dependencies = "nvim-lua/plenary.nvim",
@@ -58,6 +64,7 @@ require("lazy").setup({
 			wk.setup()
 
 			wk.add({
+				{ "<leader>m", group = "Markdown" },
 				{ "<leader>d", group = "Diffview" },
 				{ "<leader>dc", desc = "Close diffview" },
 				{ "<leader>dh", desc = "File history" },
